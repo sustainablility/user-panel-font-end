@@ -2,6 +2,9 @@ import React from 'react';
 
 import getUserTokenFromCookie from './lib/getUserTokenFromCookie'
 import getUserInfoByUserToken from './lib/getUserInfoByUserToken'
+import DatasetDisplay from './component/datasetDIsplay/DatasetDisplay'
+import ProcedureDisplay from "./component/procedureDIsplay/ProcedureDisplay";
+import setCookie from "./lib/setCookieForTesting";
 import {indexURL} from './config';
 
 class App extends React.Component{
@@ -33,9 +36,16 @@ class App extends React.Component{
         if (!this.state.loaded) {
             return (<div>Loading</div>);
         }
-        return (
-            <div>{this.userInfo.id}</div>
+        let renderItem = [];
+
+        renderItem.push(<div>
+            <DatasetDisplay dataset={this.userInfo["databases"]}/>
+        </div>);
+
+        renderItem.push(
+            <ProcedureDisplay procedure={this.userInfo["procedures"]}/>
         );
+        return renderItem;
     }
 }
 
