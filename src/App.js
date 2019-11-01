@@ -5,6 +5,7 @@ import getUserInfoByUserToken from './lib/getUserInfoByUserToken'
 import DatasetDisplay from './component/datasetDIsplay/DatasetDisplay'
 import ProcedureDisplay from "./component/procedureDIsplay/ProcedureDisplay";
 import setCookie from "./lib/setCookieForTesting";
+import AddProcedure from "./component/procedureDIsplay/addProcedure";
 import {indexURL} from './config';
 
 class App extends React.Component{
@@ -19,14 +20,19 @@ class App extends React.Component{
     }
 
     async init() {
-        let userToken = getUserTokenFromCookie();
+        let userToken = await getUserTokenFromCookie();
+        if (userToken === null) {
+            window.location.href = indexURL
+        }
         let userInfo = await getUserInfoByUserToken(userToken);
         if (userInfo === null) {
             window.location.href = indexURL
         }
         this.userInfo = userInfo;
+        this.setState({userToken: userToken});
         this.setState({loaded: true})
     }
+
     componentDidMount() {
 
     }
@@ -37,13 +43,19 @@ class App extends React.Component{
             return (<div>Loading</div>);
         }
         let renderItem = [];
-
-        renderItem.push(<div>
-            <DatasetDisplay dataset={this.userInfo["databases"]}/>
-        </div>);
+        renderItem.push(
+            <div>
+                <div>Dataset: </div>
+                <DatasetDisplay dataset={this.userInfo["databases"]}/>
+            </div>
+        );
 
         renderItem.push(
-            <ProcedureDisplay procedure={this.userInfo["procedures"]}/>
+            <div>
+                <div>Procedure: </div>
+                <AddProcedure userToken={this.state.userToken}/>
+                <ProcedureDisplay procedure={this.userInfo["procedures"]}/>
+            </div>
         );
         return renderItem;
     }
