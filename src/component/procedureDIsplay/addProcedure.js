@@ -7,7 +7,6 @@ class AddProcedure extends React.Component{
         let procedureNameInputValue = document.getElementById("user-panel-addprocedure-text").value;
         let addProcedureResult = await addUserProcedure(procedureNameInputValue, userToken);
         if (addProcedureResult) {
-            console.log("added");
             window.location.reload();
         }
     }
