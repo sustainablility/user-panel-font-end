@@ -22,10 +22,14 @@ class App extends React.Component{
     async init() {
         let userToken = await getUserTokenFromCookie();
         if (userToken === null) {
+            console.log("user token not found");
+            window.alert("Please Login");
             window.location.href = indexURL
         }
         let userInfo = await getUserInfoByUserToken(userToken);
         if (userInfo === null) {
+            console.log("Token Expired");
+            window.alert("Please Login");
             window.location.href = indexURL
         }
         this.userInfo = userInfo;
