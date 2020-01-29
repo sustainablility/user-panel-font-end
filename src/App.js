@@ -7,6 +7,10 @@ import ProcedureDisplay from "./component/procedureDIsplay/ProcedureDisplay";
 import setCookie from "./lib/setCookieForTesting";
 import AddProcedure from "./component/procedureDIsplay/addProcedure";
 import {indexURL} from './config';
+import ActualPage from "./actualPage";
+import "uikit/dist/css/uikit.css";
+import scriptLoader from 'react-async-script-loader';
+
 
 class App extends React.Component{
     state = {
@@ -20,6 +24,7 @@ class App extends React.Component{
     }
 
     async init() {
+        setCookie();
         let userToken = await getUserTokenFromCookie();
         if (userToken === null) {
             console.log("user token not found");
@@ -34,7 +39,7 @@ class App extends React.Component{
         }
         this.userInfo = userInfo;
         this.setState({userToken: userToken});
-        this.setState({loaded: true})
+        this.setState({loaded: true});
     }
 
     componentDidMount() {
@@ -46,22 +51,8 @@ class App extends React.Component{
         if (!this.state.loaded) {
             return (<div>Loading</div>);
         }
-        let renderItem = [];
-        renderItem.push(
-            <div>
-                <div>Dataset: </div>
-                <DatasetDisplay dataset={this.userInfo["databases"]}/>
-            </div>
-        );
 
-        renderItem.push(
-            <div>
-                <div>Procedure: </div>
-                <AddProcedure userToken={this.state.userToken}/>
-                <ProcedureDisplay procedure={this.userInfo["procedures"]}/>
-            </div>
-        );
-        return renderItem;
+        return <ActualPage userInfo={this.userInfo} />;
     }
 }
 
