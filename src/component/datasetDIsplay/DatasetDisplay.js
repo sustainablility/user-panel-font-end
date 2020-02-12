@@ -1,5 +1,10 @@
 import React from 'react';
-import OneDataset from './OneDataset';
+import ListSubheader from '@material-ui/core/ListSubheader';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import DatasetIcon from '@material-ui/icons/Storage';
 
 class DatasetDisplay extends React.Component {
     render() {
@@ -7,10 +12,28 @@ class DatasetDisplay extends React.Component {
         let datasetDisplay = [];
         for (let dataset of datasetList) {
             datasetDisplay.push(
-                <OneDataset datasetName={dataset}/>
+                <ListItem button>
+                    <ListItemIcon>
+                        <DatasetIcon />
+                    </ListItemIcon>
+                    <ListItemText primary={dataset} />
+                </ListItem>
             );
         }
-        return datasetDisplay;
+        let thingsToRender =
+            <List
+                component="nav"
+                aria-labelledby="datasetList"
+                subheader={
+                    <ListSubheader component="div" id="datasetList">
+                        Dataset
+                    </ListSubheader>
+                }
+            >
+                {datasetDisplay}
+            </List>;
+
+        return thingsToRender;
     }
 }
 

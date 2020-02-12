@@ -8,8 +8,6 @@ import setCookie from "./lib/setCookieForTesting";
 import AddProcedure from "./component/procedureDIsplay/addProcedure";
 import {indexURL} from './config';
 import ActualPage from "./actualPage";
-import "uikit/dist/css/uikit.css";
-import scriptLoader from 'react-async-script-loader';
 
 
 class App extends React.Component{

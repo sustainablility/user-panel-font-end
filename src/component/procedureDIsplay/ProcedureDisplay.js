@@ -1,16 +1,39 @@
 import React from 'react';
-import OneProcedure from './OneProcedure';
+import ListSubheader from '@material-ui/core/ListSubheader';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import DatasetIcon from '@material-ui/icons/Storage';
 
 class ProcedureDisplay extends React.Component {
     render() {
         let procedureList = this.props["procedure"];
         let procedureDisplay = [];
-        for (let dataset of procedureList) {
+        for (let oneProcedure of procedureList) {
             procedureDisplay.push(
-                <OneProcedure procedureName={dataset}/>
+                <ListItem button>
+                    <ListItemIcon>
+                        <DatasetIcon />
+                    </ListItemIcon>
+                    <ListItemText primary={oneProcedure} />
+                </ListItem>
             );
         }
-        return procedureDisplay;
+        let thingsToRender =
+            <List
+                component="nav"
+                aria-labelledby="procedureList"
+                subheader={
+                    <ListSubheader component="div" id="procedureList">
+                        Procedures
+                    </ListSubheader>
+                }
+            >
+                {procedureDisplay}
+            </List>;
+
+        return thingsToRender;
     }
 }
 
