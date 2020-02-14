@@ -11,52 +11,56 @@ import './index.scss';
 import LogOutIcon from '@material-ui/icons/ExitToApp';
 import EditProfileIcon from '@material-ui/icons/RecentActors';
 
-export default function SwipeableTemporaryDrawer() {
-    let [state, setState] = React.useState({
-        opened: false,
-    });
-
-    let toggleDrawer = (open) => event => {
-        if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-            return;
-        }
-
-        setState({ ...state, opened: open });
+class NavBar extends React.Component{
+    state = {
+        opened: false
     };
 
-    return (
-        <div>
-            <Button color={"primary"} className={"user-panel-navbar-openButton"} onClick={toggleDrawer(true)}>RRWORKFLOW</Button>
-            <SwipeableDrawer
-                open={state.opened}
-                onClose={toggleDrawer(false)}
-                onOpen={toggleDrawer(true)}
-            >
-                <div
-                    className={"Test"}
-                    role="presentation"
-                    onClick={toggleDrawer(false)}
-                    onKeyDown={toggleDrawer(false)}
+    render() {
+        let toggleDrawer = (open) => event => {
+            if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+                return;
+            }
+            this.setState({ opened: open });
+        };
+
+        return (
+            <div>
+                <Button color={"primary"} className={"user-panel-navbar-openButton"} onClick={toggleDrawer(true)}>Hi, this is RRworkflow</Button>
+                <SwipeableDrawer
+                    open={this.state.opened}
+                    onClose={toggleDrawer(false)}
+                    onOpen={toggleDrawer(true)}
                 >
-                    <List>
-                        <ListItem button>
-                            <ListItemIcon><HomeIcon /></ListItemIcon>
-                            <ListItemText primary={"RR Workflow Panel"} />
-                        </ListItem>
-                        <ListItem button>
-                            <ListItemIcon><EditProfileIcon /></ListItemIcon>
-                            <ListItemText primary={"Edit Your Profile"} />
-                        </ListItem>
-                    </List>
-                    <Divider />
-                    <List>
-                        <ListItem button>
-                            <ListItemIcon><LogOutIcon /></ListItemIcon>
-                            <ListItemText primary={"Log Out"} />
-                        </ListItem>
-                    </List>
-                </div>
-            </SwipeableDrawer>
-        </div>
-    );
+                    <div
+                        className={"Test"}
+                        role="presentation"
+                        onClick={toggleDrawer(false)}
+                        onKeyDown={toggleDrawer(false)}
+                    >
+                        <List>
+                            <ListItem button>
+                                <ListItemIcon><HomeIcon /></ListItemIcon>
+                                <ListItemText primary={"RR Workflow Panel"} />
+                            </ListItem>
+                            <ListItem button>
+                                <ListItemIcon><EditProfileIcon /></ListItemIcon>
+                                <ListItemText primary={"Edit Your Profile"} />
+                            </ListItem>
+                        </List>
+                        <Divider />
+                        <List>
+                            <ListItem button>
+                                <ListItemIcon><LogOutIcon /></ListItemIcon>
+                                <ListItemText primary={"Log Out"} />
+                            </ListItem>
+                        </List>
+                    </div>
+                </SwipeableDrawer>
+            </div>
+        );
+
+    }
 }
+
+export default NavBar;
